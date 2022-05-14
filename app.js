@@ -14,5 +14,5 @@ app.get('/about', (reg, res) => {
 });
 
 app.use((req, res) => {
-    res.sendFile('./views/404.html', {root: __dirname});
+    res.status(404).sendFile('./views/404.html', {root: __dirname});
 });
