@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>404 Page</title>
-    </head>
+    <%- include('./partials/head.ejs') %>
     <body>
-        <nav>
-            <div class="site-title">
-                <a href="/">Blog</a>
-                <p>Nodejs blog example</p>
-            </div>
-            <ul>
-                <li><a href="/">Posts</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/blogs/create">New Post</a></li>
-            </ul>
-        </nav>
+        <%- include('./partials/nav.ejs') %>
 
         <h1>404</h1>
         <p>Page not found.</p>
+        <%- include('./partials/footer.ejs') %>
     </body>
 </html>

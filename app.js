@@ -9,13 +9,17 @@ app.set('view engine', 'ejs');
 app.listen(3000);
 
 app.get('/', (reg, res) => {
-    res.render('index');
+    res.render('index', {title: 'random title'});
 });
 
 app.get('/about', (reg, res) => {
-    res.render('about');
+    res.render('about', {title: 'random title'});
+});
+
+app.get('/blogs/create', (reg, res) => {
+    res.render('create', {title: 'random title'});
 });
 
 app.use((req, res) => {
-    res.status(404).render('404');
+    res.status(404).render('404', {title: 'random title'});
 });
