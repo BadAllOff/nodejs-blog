@@ -1,8 +1,8 @@
 const fs = require('fs');
 const express = require('express');
 const mongoose = require('mongoose');
-const _ = require('lodash');
 const Blog = require('./models/blog');
+const _ = require('lodash');
 
 // express app
 const app = express();
@@ -18,19 +18,21 @@ mongoose.connect(dbURI)
 // register view engine
 app.set('view engine', 'ejs');
 
+// middleware & static files
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (reg, res) => {
+app.get('/', (q, res) => {
     res.redirect('/blogs');
     // res.render('index', { title: 'random title' });
 });
 
-app.get('/about', (reg, res) => {
+app.get('/about', (req, res) => {
     res.render('about', { title: 'random title' });
 });
 
 // blog routes
-app.get('/blogs', (reg, res) => {
+app.get('/blogs', (req, res) => {
     Blog.find().sort({ createdAt: -1 })
         .then(result => {
             res.render('index', { title: 'Blog page', blogs: result });
@@ -38,7 +40,19 @@ app.get('/blogs', (reg, res) => {
         .catch(err => console.log(err))
 })
 
-app.get('/blogs/create', (reg, res) => {
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body);
+    console.log(req.body)
+    blog.save()
+        .then(result => {
+            res.redirect('/blogs');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+app.get('/blogs/create', (req, res) => {
     res.render('create', { title: 'random title' });
 });
 
