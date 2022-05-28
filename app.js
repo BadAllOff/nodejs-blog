@@ -21,10 +21,14 @@ app.set('view engine', 'ejs');
 // middleware & static files
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+    res.locals.path = req.path;
+    next();
+  });
+
 
 app.get('/', (q, res) => {
     res.redirect('/blogs');
-    // res.render('index', { title: 'random title' });
 });
 
 app.get('/about', (req, res) => {
@@ -62,6 +66,16 @@ app.get('/blogs/:id', (req, res) => {
     Blog.findById(id)
         .then(result => res.render('details', { blog: result, title: result.title }))
         .catch(err => console.log(err))
+})
+
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            res.json({redirect: '/blogs'})
+        })
+        .catch(err => console.log(err));
 })
 
 app.use((req, res) => {
