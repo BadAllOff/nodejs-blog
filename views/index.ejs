@@ -5,7 +5,12 @@
         <%- include('./partials/nav.ejs') %>
 
         <h1>Blog Heading</h1>
-        <p>My first paragraph.</p>
+
+        <% if (blogs.length > 0) { blogs.forEach(blog => { %>
+            <h3><%= blog.title %></h3>
+        <% })} else { %>
+            <p>There is no records for now</p>
+        <% } %> 
+        
         <%- include('./partials/footer.ejs') %>
-    </body>
 </html>
